@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grid Map</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        h2, h3 {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #999;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .start { background-color: green; color: white; }
+        .end { background-color: red; color: white; }
+        .obstacle { background-color: gray; color: white; }
+
+        #reset-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h2>選擇地圖大小（5~9）：</h2>
+    <form method="post">
+        <input type="number" name="n" min="5" max="9" required>
+        <button type="submit">建立網格</button>
+    </form>
+
+    {% if n %}
+    <h3>{{ n }} x {{ n }} 地圖</h3>
+    <button id="reset-btn">重設網格</button>
+    <table id="grid">
+        {% for i in range(n) %}
+        <tr>
+            {% for j in range(n) %}
+            <td data-row="{{ i }}" data-col="{{ j }}">
+                {{ loop.index0 + i * n + 1 }}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        let startSet = false;
+        let endSet = false;
+        let obstacleCount = 0;
+        const maxObstacles = {{ n }} - 2;
+
+        const resetBtn = document.getElementById('reset-btn');
+        const cells = document.querySelectorAll('#grid td');
+
+        function resetGrid() {
+            startSet = false;
+            endSet = false;
+            obstacleCount = 0;
+            cells.forEach(cell => {
+                cell.classList.remove('start', 'end', 'obstacle');
+            });
+        }
+
+        resetBtn.addEventListener('click', resetGrid);
+
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                if (!startSet) {
+                    cell.classList.add('start');
+                    startSet = true;
+                } else if (!endSet && !cell.classList.contains('start')) {
+                    cell.classList.add('end');
+                    endSet = true;
+                } else if (
+                    obstacleCount < maxObstacles &&
+                    !cell.classList.contains('start') &&
+                    !cell.classList.contains('end') &&
+                    !cell.classList.contains('obstacle')
+                ) {
+                    cell.classList.add('obstacle');
+                    obstacleCount++;
+                }
+            });
+        });
+    </script>
+    {% endif %}
+</body>
+</html>
