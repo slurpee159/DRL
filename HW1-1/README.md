@@ -163,3 +163,7 @@ if __name__ == '__main__':
     threading.Thread(target=open_browser).start()
     app.run(debug=True)
 ```
+
+
+
+![image](https://github.com/user-attachments/assets/4615624c-2494-48e4-9143-bca4384d40bd)
