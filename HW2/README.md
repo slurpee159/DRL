@@ -33,77 +33,145 @@ Then open your browser at `http://127.0.0.1:5000`
 
 ---
 
-## Programming-Focused Q&A
+## Programming-Focused Q&A with Code Examples
 
-### 1. **How is the grid generated in the frontend?**
-The grid is created dynamically in JavaScript using `createGrid()`:
+### 1. **How to generate a dynamic grid on the webpage?**
+You can create an n x n grid dynamically using JavaScript by appending `div` elements to a container and using CSS Grid layout. Here's how it's done:
+
+**JavaScript Code (from `index.html`)**:
 ```javascript
-document.getElementById('gridContainer').style.gridTemplateColumns = `repeat(${gridSize}, 50px)`;
+function createGrid() {
+    gridSize = parseInt(document.getElementById('gridSize').value);
+    gridData = [];
+    document.getElementById('gridContainer').style.gridTemplateColumns = `repeat(${gridSize}, 50px)`;
+    document.getElementById('gridContainer').innerHTML = '';
+
+    for (let i = 0; i < gridSize; i++) {
+        gridData[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            cell.onclick = () => handleCellClick(i, j, cell);
+            gridData[i][j] = '';
+            document.getElementById('gridContainer').appendChild(cell);
+        }
+    }
+}
 ```
-It appends `<div>` elements for each cell, sets data attributes for coordinates, and assigns a click handler.
+This function creates a grid and allows each cell to respond to click events.
 
 ---
 
-### 2. **How are start, goal, and obstacles assigned?**
-Using `handleCellClick(i, j, cell)` in JavaScript:
+### 2. **How to let users select start, goal, and obstacles?**
+Clicking on the grid sequentially marks the start, goal, and obstacles. The logic is:
 - First click → start (green)
 - Second click → goal (red)
 - Next (n-2) clicks → obstacles (gray)
-All clicks modify `gridData` state.
+
+**JavaScript Code:**
+```javascript
+function handleCellClick(i, j, cell) {
+    if (!start) {
+        start = [i, j];
+        cell.classList.add('start');
+    } else if (!goal) {
+        goal = [i, j];
+        cell.classList.add('goal');
+    } else if (obstacles.length < gridSize - 2) {
+        const key = `${i},${j}`;
+        if (!obstacles.some(o => o[0] === i && o[1] === j)) {
+            obstacles.push([i, j]);
+            cell.classList.add('obstacle');
+        }
+    }
+}
+```
 
 ---
 
-### 3. **How is data sent to the backend?**
-On "Run Value Iteration" click:
+### 3. **How to send the grid data to the Flask backend?**
+When the user clicks the **"Run Value Iteration"** button, an HTTP POST request is made to the server with grid configuration.
+
+**JavaScript Code:**
 ```javascript
 fetch('/run_value_iteration', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ size, start, goal, obstacles })
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ size: gridSize, start, goal, obstacles })
 });
 ```
-The Flask backend parses the JSON and starts value iteration.
 
 ---
 
-### 4. **How is Value Iteration implemented in Python?**
-In `app.py`, the `value_iteration()` function:
+### 4. **How to write the Value Iteration algorithm in Python?**
+The core logic is implemented in Python and uses dynamic programming. Here's the core implementation:
+
+**Python Code (from `app.py`)**:
 ```python
-while True:
-    for each state s:
-        for each action a:
-            compute reward + gamma * V(s')
-        update V[s] = max over actions
-    if max change < theta: break
+def value_iteration(n, start, goal, obstacles, gamma=0.9, theta=1e-4):
+    V = [[0 for _ in range(n)] for _ in range(n)]
+    policy = [["" for _ in range(n)] for _ in range(n)]
+    actions = ['U', 'D', 'L', 'R']
+    directions = {'U': (-1, 0), 'D': (1, 0), 'L': (0, -1), 'R': (0, 1)}
+
+    def is_valid(x, y):
+        return 0 <= x < n and 0 <= y < n and (x, y) not in obstacles
+
+    while True:
+        delta = 0
+        for i in range(n):
+            for j in range(n):
+                if (i, j) in obstacles or (i, j) == goal:
+                    continue
+                v = V[i][j]
+                max_value = float('-inf')
+                best_action = ''
+                for a in actions:
+                    dx, dy = directions[a]
+                    ni, nj = i + dx, j + dy
+                    if not is_valid(ni, nj):
+                        ni, nj = i, j
+                    reward = 1 if (ni, nj) == goal else 0
+                    val = reward + gamma * V[ni][nj]
+                    if val > max_value:
+                        max_value = val
+                        best_action = a
+                V[i][j] = max_value
+                policy[i][j] = best_action
+                delta = max(delta, abs(v - V[i][j]))
+        if delta < theta:
+            break
+
+    return V, policy
 ```
-Obstacles are skipped; the goal has reward 1.
 
 ---
 
-### 5. **How are policy and value results returned?**
-After computing `V` and `policy`, the Flask app returns:
-```python
-return jsonify({"V": V, "policy": policy})
+### 5. **How to return and display the results?**
+The backend sends JSON with the policy and value matrix. The frontend renders arrows and values for each cell using this logic:
+
+**JavaScript Code Snippet:**
+```javascript
+valueCell.innerHTML = `<div class='value'>${V[i][j].toFixed(2)}</div>`;
+policyCell.innerHTML = `<div class='policy'>${arrow(policy[i][j])}</div>`;
 ```
-Frontend parses and updates two grid views:
-- `policyGrid`: shows arrows for actions
-- `valueGrid`: shows numerical values
 
----
-
-## Example Enhancements to Try
-- Add stochastic transitions (e.g. slip left/right)
-- Customize reward function
-- Switch between Value Iteration and Policy Iteration
-- Export policy/value as CSV
+Function `arrow()` converts policy letters to arrows:
+```javascript
+function arrow(action) {
+    return { 'U': '↓', 'D': '↑', 'L': '→', 'R': '←' }[action] || '';
+}
+```
 
 ---
 
 ## Educational Use
-This project is perfect for understanding:
-- Markov Decision Processes (MDPs)
-- Reinforcement Learning fundamentals
+This project demonstrates key concepts in:
 - Dynamic Programming
+- Value Iteration for MDPs
+- Frontend-backend interaction
 
-Feel free to explore, extend, and tweak it!
+Use it as a reference or starting point to explore Reinforcement Learning.
 
