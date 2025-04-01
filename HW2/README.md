@@ -14,12 +14,6 @@ This project allows users to:
 
 ---
 
-## How to Run
-```bash
-pip install flask
-python app.py
-```
-Then open your browser at `http://127.0.0.1:5000`
 
 ---
 
@@ -167,11 +161,4 @@ function arrow(action) {
 
 ---
 
-## Educational Use
-This project demonstrates key concepts in:
-- Dynamic Programming
-- Value Iteration for MDPs
-- Frontend-backend interaction
-
-Use it as a reference or starting point to explore Reinforcement Learning.
 
