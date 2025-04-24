@@ -1,4 +1,4 @@
-# HW2 Grid World Value Iteration Web App
+# HW2: Grid World Value Iteration Web App
 
 An interactive Flask web application to visualize and compute optimal policies using the **Value Iteration** algorithm on a customizable grid world.
 
