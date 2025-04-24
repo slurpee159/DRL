@@ -1,4 +1,4 @@
-## HW1-1 Flask Grid Map Selection Web App
+## HW1-1: Flask Grid Map Selection Web App
 
 ### 1. Prompt: Create an Interactive n x n Grid Map (n from 5 to 9)
 
