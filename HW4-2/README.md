@@ -51,7 +51,8 @@ Common hyper‑params (kept identical to HW 4‑1):
 |   dueling   |     ![](curves_dueling.png)     |   ![](curves_dueling.png)  |
 | duel‑double |    ![](curves_dueldouble.png)   | ![](curves_dueldouble.png) |
 
-> *Replace the image links with your generated PNGs.*
+![螢幕擷取畫面 2025-05-19 025559](https://github.com/user-attachments/assets/231c8de8-fae5-49da-b598-57c8566b320a)
+
 
 ### 4 | Key Takeaways
 
@@ -59,5 +60,5 @@ Common hyper‑params (kept identical to HW 4‑1):
 2. **Dueling head** reduces variance in later episodes by decoupling state‑value.
 3. **Duel‑Double** achieves the highest final moving‑average reward (\~+7) on this map with minimal added compute.
 
-![螢幕擷取畫面 2025-05-19 025559](https://github.com/user-attachments/assets/231c8de8-fae5-49da-b598-57c8566b320a)
+
 
