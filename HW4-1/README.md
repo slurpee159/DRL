@@ -1,10 +1,6 @@
 # HW 4‑1 — Naive DQN on **Static Gridworld**
 
-*(English report — ready to copy‑paste into `README.md`)*
-
----
-
-## Part Ⅰ – Debugging Dialogue (three key exchanges)
+## Debugging Dialogue (three key exchanges)
 
 **Q1:** I executed `!python hw4_1_naive_dqn.py` in Colab and immediately saw `error: unrecognized arguments: -f …kernel‑xxxx.json`.
 **A1:** That flag comes from Jupyter itself. I switched to *tolerant* parsing:
@@ -50,7 +46,7 @@ returns climb towards 0 … +4. Occasional negative spikes remain due to resid
 
 ---
 
-## Part Ⅱ – Technical Summary
+##Technical Summary
 
 ### 1 | Environment
 
