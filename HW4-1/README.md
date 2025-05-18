@@ -83,6 +83,5 @@ returns climb towards 0 … +4. Occasional negative spikes remain due to resid
 3. A single hidden layer of 128 units already suffices for this tiny task; larger models did not help.
 4. Negative outliers stem from residual exploration and Q‑over/under‑estimation typical of vanilla DQN.
 
----
+![image](https://github.com/user-attachments/assets/c100301b-3b36-4d1e-994d-4689220a5f6a)
 
-> This report, together with the runnable script and the training curve, completes **HW 4‑1** requirements. Feel free to paste it directly into your course `README.md`. 🎉
