@@ -1,6 +1,6 @@
 # HW 4‑1 — Naive DQN on **Static Gridworld**
 
-**Q1:** I executed `!python hw4_1_naive_dqn.py` in Colab and immediately saw `error: unrecognized arguments: -f …kernel‑xxxx.json`.
+**Q1:** I executed `!python hw4_1_naive_dqn.py` in Colab and immediately saw `error: unrecognized arguments: -f …kernel‑xxxx.json`.<br>
 **A1:** That flag comes from Jupyter itself. I switched to *tolerant* parsing:
 
 ```python
@@ -9,7 +9,7 @@ args, _ = parser.parse_known_args()  # ignores unknown notebook flags
 
 Pull the updated script and the error disappears.
 
-**Q2:** The next run crashed with `AttributeError: 'Gridworld' object has no attribute 'observation'`.
+**Q2:** The next run crashed with `AttributeError: 'Gridworld' object has no attribute 'observation'`.<br>
 **A2:** The original Gridworld isn’t Gym‑style, so I wrapped it:
 
 ```python
