@@ -6,9 +6,6 @@ A1. The vanilla TD target tends to **over‑estimate Q‑values**. Double DQN 
 **Q2. What benefit does the *Dueling* head bring in such a small Gridworld?**
 A2. Even in a 4×4 map, many states share similar “how good is this state” value while differing only in the best action. Splitting **V(s)** and **A(s,a)** lets the network learn that common value, leading to lower variance and slightly higher final reward.
 
-**Q3. Why keep all other hyper‑parameters identical to HW 4‑1?**
-A3. To isolate the effect of architecture/TD changes. If learning‑rate, ε‑schedule or buffer size also changed, it would be unclear whether performance gains came from Double/Dueling itself or from tuning.
-
 ---
 
 ## Technical Summary Summary
