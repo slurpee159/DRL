@@ -26,21 +26,9 @@ class GridEnvWrapper:
 
 This adds `reset()`, `step()`, `render()` and a 64‑dim one‑hot observation, solving the attribute error.
 
-**Q3:** Training starts but early returns plunge to –50. Is that normal?
-**A3:** Yes. With ε≈1.0 the agent moves randomly, often falling into the pit (–10) many times per episode. As ε decays (*exponential with τ = 300*):
+**Q3.** Training runs but early returns plunge to –50. Is that normal?  
+**A3.** Yes. With ε≈1 the agent explores randomly and often falls into the pit (–10). As ε decays exponentially (`τ = 300`) the returns rise toward 0 … +4. Occasional dips remain due to residual exploration and vanilla DQN instability.
 
-```python
-eps = eps_end + (eps_start - eps_end) * math.exp(-steps / 300)
-```
-
-returns climb towards 0 … +4. Occasional negative spikes remain due to residual exploration and vanilla DQN instability.
-
-\---|---|
-\| **I ran `!python hw4_1_naive_dqn.py` in Colab and got**<br>`error: unrecognized arguments: -f …kernel‑xxxx.json`. | That flag is injected by Jupyter. I swapped `parse_args()` for `parse_known_args()` so unknown flags are ignored. Please pull the new script and rerun. |
-\| **Now it stops at**<br>`AttributeError: 'Gridworld' object has no attribute 'observation'`. | The legacy environment lacked a Gym‑like API. I wrapped it with `GridEnvWrapper`, adding `reset()`, `step()`, `render()`, and a flattened one‑hot observation. Updated script uploaded. |
-\| **The code trains, but rewards plunge to –50 early on. Normal?** | Yes. At high ε (≈1) the agent explores randomly, often falling into the pit (–10). As ε decays it learns and returns rise toward 0 … +4. Occasional dips remain due to exploration plus vanilla DQN instability. |
-\| **Greedy evaluation shows 7 steps with total +4. Is that optimal?** | Exactly. Shortest safe path: 6 moves × (–1) + terminal +10 = **+4**. Seven moves from `(0,3)` to `(0,0)` avoids the pit `(0,1)` and wall `(1,1)`. |
-\| **So training is successful?** | Yes—the Naive DQN baseline now works and can serve as a reference for Double/Dueling variants in later tasks. |
 
 ---
 
