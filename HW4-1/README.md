@@ -1,6 +1,6 @@
 # HW 4‑1 — Naive DQN on **Static Gridworld**
 
-**Q1:** I executed `!python hw4_1_naive_dqn.py` in Colab and immediately saw `error: unrecognized arguments: -f …kernel‑xxxx.json`.<br>
+**Q1:** I executed in Colab and immediately saw `error: unrecognized arguments: -f …kernel‑xxxx.json`.<br>
 **A1:** That flag comes from Jupyter itself. I switched to *tolerant* parsing:
 
 ```python
