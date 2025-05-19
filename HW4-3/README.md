@@ -1,10 +1,5 @@
 # HW 4-3 — DQN in **Random‑Mode Gridworld** (Keras)
 
-<sup>Framework migration · training‑stability techniques</sup>
-
----
-
-## Q & A — Development Notes
 
 **Q1. Why switch from PyTorch to Keras/TensorFlow 2 for this homework?**<br>
 A1. Keras offers a concise `Model` / `GradientTape` workflow plus built‑in learning‑rate schedulers and easy mixed‑precision; migrating the baseline shows framework‑agnostic RL skill.
