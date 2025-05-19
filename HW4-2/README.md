@@ -8,6 +8,21 @@ A2. Even in a 4×4 map, many states share similar “how good is this state” v
 
 ---
 
+```bash
+# baseline (for reference)
+python hw4_2_dqn_variants.py --algo naive --smooth 40
+# Double DQN
+python hw4_2_dqn_variants.py --algo double --smooth 40
+# Dueling DQN
+python hw4_2_dqn_variants.py --algo dueling --smooth 40
+# Dueling + Double TD
+python hw4_2_dqn_variants.py --algo dueldouble --smooth 40
+```
+
+Each run writes **`curves_<algo>.png`** (loss ▲ & reward ▲) to the project root.
+
+---
+
 ## Technical Summary Summary
 
 ### 1 | Environment
