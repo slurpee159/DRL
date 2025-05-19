@@ -57,14 +57,14 @@ Common hyper‑params (kept identical to HW 4‑1):
 | Target sync    | every 50 episodes         |
 | Max steps/ep.  | 50                        |
 
-### 3 | Results
+### 3 | Results 
 
-|  Algorithm  | Learning curve *(reward MA=40)* |         Loss trend         |
-| :---------: | :-----------------------------: | :------------------------: |
-|    naïve    |      ![](curves_naive.png)      |    ![](curves_naive.png)   |
-|    double   |      ![](curves_double.png)     |   ![](curves_double.png)   |
-|   dueling   |     ![](curves_dueling.png)     |   ![](curves_dueling.png)  |
-| duel‑double |    ![](curves_dueldouble.png)   | ![](curves_dueldouble.png) |
+| Algorithm   | Final MA(40) Reward | Notes                                  |
+|-------------|--------------------:|----------------------------------------|
+| naïve       | – 4                | baseline from HW4-1                    |
+| **double**  | **+ 1**            | faster climb, less variance            |
+| **dueling** | **0**              | variance reduced but mean ~0           |
+| **duel-double** | **+ 3**        | best overall stability & performance   |
 
 ![螢幕擷取畫面 2025-05-19 025559](https://github.com/user-attachments/assets/231c8de8-fae5-49da-b598-57c8566b320a)
 
